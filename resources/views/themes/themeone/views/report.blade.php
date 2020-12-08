@@ -43,17 +43,50 @@
 													<table class="table">
 														<thead>
 															<tr>
-																<th>Order date</th>
-																<th>Delivery Address</th>
-																<th>Suburb</th>
-																<th>State</th>
-																<th>Product Code</th>
-																<th>Product description</th>
-																<th>Category</th>
-																<th>Certification</th>
-																<th>Cost</th>
-																<th>Quantity</th>
-																<th>User email</th>
+																<th>
+																	Order date
+																	<input type="text" id="date" value="" />
+																</th>
+																<th>
+																	Delivery Address
+																	<input type="text" id="address" value="" />
+																</th>
+																<th>
+																	Suburb
+																	<input type="text" id="suburb" value="" />
+																</th>
+																<th>
+																	State
+																	<input type="text" id="state" value="" />
+																</th>
+																<th>
+																	Product Code
+																	<input type="text" id="model" value="" />
+																</th>
+																<th>
+																	Product description
+																	<input type="text" id="description" value="" />
+																</th>
+																<th>
+																	Category
+																	<input type="text" id="categories_name" value="" />
+																</th>
+																<th>
+																	Certification
+																	<input type="text" id="certification" value="" />
+																</th>
+																<th>
+																	Cost
+																	<input type="text" id="final_price" value="" />
+																</th>
+																<th>
+																	Qty
+																	<input type="text" id="products_quantity" value="" />
+																</th>
+																<th>
+																	User email
+																	<input type="text" id="email" value="" />
+																</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -68,17 +101,41 @@
 																foreach($data->products as $product){
 															?>
 															<tr>
-																<td><?php echo $date_purchased ?></td>
-																<td><?php echo $delivery_street_address ?></td>
-																<td><?php echo $delivery_suburb ?></td>
-																<td><?php echo $delivery_state ?></td>
-																<td><?php echo $product->products_model ?></td>
-																<td><?php echo $product->description ?></td>
-																<td><?php echo $product->categories_name ?></td>
-																<td><?php echo $product->certification ?></td>
-																<td><?php echo $product->final_price ?></td>
-																<td><?php echo $product->products_quantity ?></td>
-																<td><?php echo $email ?></td>
+																<td class='date'>
+																	<?php echo $date_purchased ?>
+																</td>
+																<td class='address'>
+																	<?php echo $delivery_street_address ?>
+																</td>
+																<td class='suburb'>
+																	<?php echo $delivery_suburb ?>
+																</td>
+																<td class='state'>
+																	<?php echo $delivery_state ?>
+																</td>
+																<td class='model'>
+																	<?php echo $product->products_model ?>
+																</td>
+																<td class='description' width="150px" title="<?php echo strip_tags($product->description) ?>">
+																	<p>
+																		<?php echo strip_tags($product->description) ?>
+																	</p>
+																</td>
+																<td class='categories_name'>
+																	<?php echo $product->categories_name ?>
+																</td>
+																<td class='certification'>
+																	<?php echo $product->certification ?>
+																</td>
+																<td class='final_price' width="70px">
+																	<?php echo $product->final_price ?>
+																</td>
+																<td class='products_quantity' width="50px">
+																	<?php echo $product->products_quantity ?>
+																</td>
+																<td class='email'>
+																	<?php echo $email ?>
+																</td>
 															</tr>
 																<?php } ?>
 															<?php } ?>

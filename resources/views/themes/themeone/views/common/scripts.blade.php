@@ -1,6 +1,7 @@
 <!-- scripts -->
 <script src="{!! asset('public/js/app.js') !!}"></script>
 <script src="{!! asset('public/js/jquery-ui.js') !!}"></script>
+<script src="{!! asset('public/js/custom.js') !!}"></script>
 <!-- owl carousel -->
 <script src="{!! asset('public/js/owl.carousel.js') !!}"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>

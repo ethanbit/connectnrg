@@ -8,7 +8,9 @@
 /.vagrant
 /test*
 /uploads
-/public*
+/public/
+!/public/css/custom.css
+/publicuploads/
 /database
 /config
 /bootstrap
@@ -40,4 +42,3 @@ package.json
 phpunit.xml
 robots.txt
 readme.md
-!/public/css/custom.css
