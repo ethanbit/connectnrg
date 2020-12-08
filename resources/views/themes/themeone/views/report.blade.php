@@ -50,7 +50,7 @@
 																	Order date
 																	<input type="text" id="date" value="" />
 																</th>
-																<th>
+																<th width="150px">
 																	Delivery Address
 																	<input type="text" id="address" value="" />
 																</th>
@@ -58,15 +58,15 @@
 																	Suburb
 																	<input type="text" id="suburb" value="" />
 																</th>
-																<th>
+																<th width="70px">
 																	State
 																	<input type="text" id="state" value="" />
 																</th>
-																<th>
+																<th width="100px">
 																	Product Code
 																	<input type="text" id="model" value="" />
 																</th>
-																<th>
+																<th width="150px">
 																	Product description
 																	<input type="text" id="description" value="" />
 																</th>
@@ -78,11 +78,11 @@
 																	Certification
 																	<input type="text" id="certification" value="" />
 																</th>
-																<th>
+																<th width="70px">
 																	Cost
 																	<input type="text" id="final_price" value="" />
 																</th>
-																<th>
+																<th width="50px">
 																	Qty
 																	<input type="text" id="products_quantity" value="" />
 																</th>

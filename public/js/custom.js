@@ -1,4 +1,7 @@
 jQuery(document).ready(function () {
+	jQuery("#date").datepicker({
+		dateFormat: "dd/mm/yy",
+	});
 	jQuery(".report th input").change(function () {
 		var getColumnClass = jQuery(this).attr("id");
 		var getSearchText = jQuery(this).val();
