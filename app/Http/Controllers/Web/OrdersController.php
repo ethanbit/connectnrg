@@ -106,24 +106,21 @@ class OrdersController extends DataController
 						
 			//shipping address
 			$myVar = new ShippingAddressController();
-			if(!empty(auth()->guard('customer')->user()->customers_default_address_id)){
+			$address_id = auth()->guard('customer')->user()->customers_default_address_id;
+			$address = $myVar->getShippingAddress($address_id);
+			if(!empty($address)){
+				$address = $address[0];
 				
-				$address_id = auth()->guard('customer')->user()->customers_default_address_id;
-				$address = $myVar->getShippingAddress($address_id);
-				if(!empty($address)){
-					$address = $address[0];
-					
-					$address->delivery_phone=auth()->guard('customer')->user()->customers_telephone;
-					//$address->address_id = $address_id;
-				}else{
-					$address = '';
-				}				
-			}
-			
-			//echo "<pre>"; print_r($address); echo "</pre>".__FILE__.":".__LINE__;exit;
-			//if(empty(session('shipping_address'))){
+				$address->delivery_phone=auth()->guard('customer')->user()->customers_telephone;
+				//$address->address_id = $address_id;
+			}else{
+				$address = '';
+			}	
+
+			if(empty(session('shipping_address'))){
 				session(['shipping_address' => $address]);
-			//}	
+			}	
+			// echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.": ".__LINE__."";
 						
 			//shipping counties
 			if(!empty(session('shipping_address')->countries_id)){			
@@ -274,11 +271,11 @@ class OrdersController extends DataController
 		$address = (object) $shipping_data;
 		session(['shipping_address' => $address]);
 		
-		//echo "<pre>"; print_r(session('billing_address')); echo "</pre>".__FILE__.":".__LINE__;
-		//echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.":".__LINE__;
+		// echo "<pre>"; print_r(session('billing_address')); echo "</pre>".__FILE__.":".__LINE__;
+		// echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.":".__LINE__;exit;
 		echo "ok";
 
-		return redirect()->back();	 
+		//return redirect()->back();	 
 	}
 	
 	
@@ -310,7 +307,7 @@ class OrdersController extends DataController
 		//echo "<pre>"; print_r(session('billing_address')); echo "</pre>".__FILE__.":".__LINE__;
 		//echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.":".__LINE__;exit;
 
-		return redirect()->back();		
+		//return redirect()->back();		
 	}
 	
 	//checkout_payment_method
@@ -339,7 +336,7 @@ class OrdersController extends DataController
 		//echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.":".__LINE__;
 		echo "ok";
 		
-		return redirect()->back();		
+		//return redirect()->back();		
 		
 	}
 	
@@ -417,8 +414,8 @@ class OrdersController extends DataController
 		}
 		//$customers_telephone            		=   $request->customers_telephone;
 		
-		//echo "<pre>"; print_r(session('billing_address')); echo "</pre>".__FILE__.":".__LINE__;
-		//echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.":".__LINE__;exit;
+		// echo "<pre>"; print_r(session('billing_address')); echo "</pre>".__FILE__.":".__LINE__;
+		// echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.":".__LINE__;exit;
 
 		$delivery_company 						=	session('shipping_address')->company;
 		$delivery_firstname  	          		=   session('shipping_address')->firstname;
@@ -763,13 +760,14 @@ class OrdersController extends DataController
 			 $myVar = new CartController();
 			 $cart = $myVar->myCart(array());
 				 
-			 
+			//  echo "<pre>"; print_r($cart); echo "</pre>".__FILE__.": ".__LINE__."";exit;
 			 foreach($cart as $products){
 				//get products info	
 				$orders_products_id = DB::table('orders_products')->insertGetId(
 					[		 		
 						 'orders_id' 		 => 	$orders_id,
 						 'products_id' 	 	 =>		$products->products_id,
+						 'products_model' 	 	 =>		$products->model,
 						 'products_name'	 => 	$products->products_name,
 						 'products_price'	 =>  	$products->price,
 						 'final_price' 		 =>  	$products->final_price*$products->customers_basket_quantity,
@@ -813,6 +811,18 @@ class OrdersController extends DataController
 			 }
 			
 			$responseData = array('success'=>'1', 'data'=>array(), 'message'=>"Order has been placed successfully.");
+
+			if(session('step')=='4'){
+				session(['step' => array()]);
+			}	
+			
+			session(['paymentResponseData'=>'']);
+			session(['paymentResponse'=>'']);
+			session(['coupon_shipping_free'=>'']);
+			session(['shipping_address' => array()]);
+			
+			//change status of cart products
+			DB::table('customers_basket')->where('customers_id',session('customers_id'))->update(['is_order'=>'1']);			
 			
 			//send order email to user			
 			$order = DB::table('orders')
@@ -872,16 +882,6 @@ class OrdersController extends DataController
 			$myVar = new AlertController();
 			$alertSetting = $myVar->orderAlert($ordersData);
 			
-			if(session('step')=='4'){
-				session(['step' => array()]);
-			}	
-			
-			session(['paymentResponseData'=>'']);
-			session(['paymentResponse'=>'']);
-			session(['coupon_shipping_free'=>'']);
-			
-			//change status of cart products
-			DB::table('customers_basket')->where('customers_id',session('customers_id'))->update(['is_order'=>'1']);			
 			//return redirect('orders')->with('success', Lang::get("website.Payment has been processed successfully"));
 			if(Auth::guard('api')->check()){
 				return $orders_id;
@@ -910,11 +910,18 @@ class OrdersController extends DataController
 		$result['commonContent'] = $this->commonContent();
 		
 		//orders		
+		$orders = $this->getOrders();
+		$result['orders'] = $orders;
+		return view("orders", $title)->with('result', $result); 
+	}
+
+	public function getOrders(){
+		
+		//orders		
 		$orders = DB::table('orders')->orderBy('date_purchased','DESC')->where('customers_id','=', session('customers_id'))->get();	
 		
 		$index = 0;
 		$total_price = array();
-
 		
 		foreach($orders as $key => $orders_data){
 			$orders_products = DB::table('orders_products')
@@ -932,10 +939,30 @@ class OrdersController extends DataController
 				$orders[$index]->orders_status_id = $orders_status_history[0]->orders_status_id;
 				$orders[$index]->orders_status = $orders_status_history[0]->orders_status_name;
 			}
+
+			$orders[$index]->products = '';
+			$orders_products = DB::table('orders_products')
+				->where('orders_id', '=', $orders_data->orders_id)->get()->toArray();
+			if(!empty($orders_products)){
+				$tmpProduct = [];
+				foreach($orders_products as $product){
+					$productDetail = $this->getProductDetail($product->products_id);
+					$product->certification = '';
+					$product->description = '';
+					$product->categories_name = '';
+					if(count((array)$productDetail)){
+						$product->certification = $productDetail->certification;
+						$product->description = $productDetail->products_description;
+						$product->categories_name = $productDetail->categories_name;
+					}
+					$tmpProduct[] = $product;
+				}
+				$orders[$index]->products = $tmpProduct;
+			}
+
 			$index++;
 		}
-		$result['orders'] = $orders;
-		return view("orders", $title)->with('result', $result); 
+		return $orders; 
 	}
 	
 	//viewMyOrder
@@ -1104,10 +1131,11 @@ class OrdersController extends DataController
 	public function shipping_methods(){
 		
 		$result		  = array();
+		// echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.": ".__LINE__."";exit;
 		if(!empty(session('shipping_address'))){
 			$countries_id = session('shipping_address')->countries_id;
 			$toPostalCode = session('shipping_address')->postcode;
-			$toCity		  = session('shipping_address')->city;
+			$toCity		  = @session('shipping_address')->city;
 			$toAddress	  = session('shipping_address')->street;
 			if(empty($countries_id)){
 				$countries_id = 13;
@@ -1666,5 +1694,42 @@ class OrdersController extends DataController
 	
 		}
 	
+	}
+
+	public function getProductDetail($product_id){
+		$checkProduct = DB::table('products')->where('products_id', $product_id)->count();
+		$result = [];
+		if($checkProduct){
+			$result = DB::table('products as p')
+			->join('products_description as pd', 'p.products_id', '=', 'pd.products_id')
+			->join('products_to_categories as pc', 'p.products_id', '=', 'pc.products_id')
+			->join('categories_description as c', 'pc.categories_id', '=', 'c.categories_id')
+			->select(['p.certification', 'pd.products_description', 'c.categories_name'])
+			->where('p.products_id', $product_id)->first();
+		}
+
+		return $result;
+	}
+
+	public function report(){
+		$title = array('pageTitle' => "Report");
+		$result = array();		
+		$result['commonContent'] = $this->commonContent();
+		
+		$orders = $this->getOrders();
+
+		$result['data'] = $orders;
+		return view('report', $title)->with('result', $result);
+	}
+
+	public function updateOrderProductSku(){
+		$ordersProducts = DB::table('orders_products')->get();	
+		foreach($ordersProducts as $product){
+			$productDetail = DB::table('products')->select('products_model')->where('products_id', $product->products_id)->first();	
+			
+			if(count((array)$productDetail)){
+				DB::table('orders_products')->where('products_id', $product->products_id)->update([ 'products_model' => $productDetail->products_model]);	
+			}
+		}
 	}
 }

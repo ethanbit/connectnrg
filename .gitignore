@@ -40,3 +40,4 @@ package.json
 phpunit.xml
 robots.txt
 readme.md
+!/public/css/custom.css

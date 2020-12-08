@@ -512,6 +512,17 @@
                                     </span>
                                     <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
                                   </div>
+                                </div>  
+                                
+                                <div class="form-group">
+                                  <label for="name" class="col-sm-2 col-md-3 control-label">Certification</label>
+                                  <div class="col-sm-10 col-md-4">
+                                    {!! Form::text('certification',  $result['product'][0]->certification, array('class'=>'form-control', 'id'=>'certification')) !!}
+                                    <span class="help-block" style="font-weight: normal;font-size: 11px;margin-bottom: 0;">
+                                    
+                                    </span>
+                                    <span class="help-block hidden">{{ trans('labels.textRequiredFieldMessage') }}</span>
+                                  </div>
                                 </div>                                          
                                 
                                 <div class="form-group">

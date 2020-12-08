@@ -15,6 +15,9 @@
                     <a href="{{ URL::to('/orders')}}">@lang('website.Orders')</a>
                 </li>
                 <li>
+                    <a href="{{ URL::to('/report')}}">Report</a>
+                </li>
+                <li>
                     <a href="{{ URL::to('/shipping-address')}}">@lang('website.Shipping Address')</a>
                 </li>
                 <li>

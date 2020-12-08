@@ -105,7 +105,8 @@
 										<ul class="dropdown-menu">
 											<li class="nav-item"> <a href="{{ URL::to('/profile')}}" class="nav-link -before">@lang('website.Profile')</a> </li>
 											<li class="nav-item"> <a href="{{ URL::to('/wishlist')}}" class="nav-link -before">Favourites</a> </li>
-											<li class="nav-item"> <a href="{{ URL::to('/orders')}}" class="nav-link -before">Orders History</a> </li>
+                                            <li class="nav-item"> <a href="{{ URL::to('/orders')}}" class="nav-link -before">Orders History</a> </li>
+                                            <li class="nav-item"> <a href="{{ URL::to('/report')}}" class="nav-link -before">Report</a> </li>
 											<li class="nav-item"> <a href="{{ URL::to('/shipping-address')}}" class="nav-link -before">@lang('website.Shipping Address')</a> </li>
 											<li class="nav-item"> <a href="{{ URL::to('/logout')}}" class="nav-link -before">@lang('website.Logout')</a> </li>
 											
@@ -160,6 +161,7 @@
                                                 <li class="nav-item"> <a href="{{ URL::to('/profile')}}" class="nav-link -before">@lang('website.Profile')</a> </li>
                                                 <li class="nav-item"> <a href="{{ URL::to('/wishlist')}}" class="nav-link -before">Favourites</a> </li>
                                                 <li class="nav-item"> <a href="{{ URL::to('/orders')}}" class="nav-link -before">Orders History</a> </li>
+                                                <li class="nav-item"> <a href="{{ URL::to('/report')}}" class="nav-link -before">Report</a> </li>
                                                 <li class="nav-item"> <a href="{{ URL::to('/shipping-address')}}" class="nav-link -before">@lang('website.Shipping Address')</a> </li>
                                                 <li class="nav-item"> <a href="{{ URL::to('/logout')}}" class="nav-link -before">@lang('website.Logout')</a> </li>
                                             @else
@@ -247,6 +249,7 @@
                                         <li class="nav-item"> <a href="{{ URL::to('/profile')}}" class="nav-link -before">@lang('website.Profile')</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/wishlist')}}" class="nav-link -before">Favourites</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/orders')}}" class="nav-link -before">Orders History</a> </li>
+                                        <li class="nav-item"> <a href="{{ URL::to('/report')}}" class="nav-link -before">Report</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/shipping-address')}}" class="nav-link -before">@lang('website.Shipping Address')</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/logout')}}" class="nav-link -before">@lang('website.Logout')</a> </li>
                                         
@@ -324,6 +327,7 @@
                                         <li class="nav-item"> <a href="{{ URL::to('/profile')}}" class="nav-link -before">@lang('website.Profile')</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/wishlist')}}" class="nav-link -before">Favourites</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/orders')}}" class="nav-link -before">Orders History</a> </li>
+                                        <li class="nav-item"> <a href="{{ URL::to('/report')}}" class="nav-link -before">Report</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/shipping-address')}}" class="nav-link -before">@lang('website.Shipping Address')</a> </li>
                                         <li class="nav-item"> <a href="{{ URL::to('/logout')}}" class="nav-link -before">@lang('website.Logout')</a> </li>
                                     @else

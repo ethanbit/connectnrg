@@ -288,6 +288,11 @@
                                                         {{$products->products_name}}
                                                        </h3>  
                                                        <span style="margin-top:5px;" class="products_model d-md-block">SKU: {{$products->products_model}}</span>
+                                                       <?php 
+                                                       if(!empty($products->certification)){
+                                                       ?>
+                                                       <span style="margin-top:5px;" class="products_model d-md-block">Certification: {{$products->certification}}</span>
+                                                       <?php } ?>
                                                        {{--<span class="products_manufactures d-md-block">Unit: {{$products->unit_of_measure}}</span> --}}
                                                     </div>
                                                     {{-- <div class="product_cat col-md-2 col-sm-4">

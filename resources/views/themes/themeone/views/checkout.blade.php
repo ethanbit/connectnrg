@@ -48,9 +48,8 @@
                     </div>                    
                         <div class="tab-content" id="pills-tabContent">
                           <!-- <div class="tab-pane fade @if(session('step') == 0) show active @endif" id="pills-shipping" role="tabpanel" aria-labelledby="shipping-tab"> -->
-                            
                             <form name="signup" id="dh_form_shipping" enctype="multipart/form-data" class="form-validate" action="{{ URL::to('/checkout_shipping_address')}}" method="post">
-                              <input type="hidden" id="address_book_id" name="address_book_id" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->address_id}}@endif">
+                              <input type="hidden" id="address_book_id" name="address_book_id" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->address_id}}@endif">
                                 <div class="form-row">
                                   <div class="form-group col-md-12">
                                     <label class="col-md-2 col-sm-12 col-form-label" style="float:left;">Select Address: </label>
@@ -81,33 +80,33 @@
                                 <div class="form-row">
                                   <div class="form-group col-md-6">
                                     <!-- <label for="firstName">@lang('website.First Name')</label> -->
-                                    <input type="text" class="form-control field-validate" id="firstname" name="firstname" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->firstname}}@endif" placeholder="@lang('website.First Name')">
+                                    <input type="text" class="form-control field-validate" id="firstname" name="firstname" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->firstname}}@endif" placeholder="@lang('website.First Name')">
                                      <span class="help-block error-content" hidden>@lang('website.Please enter your first name')</span>  
                                   </div>
                                   <div class="form-group col-md-6">
                                     <!-- <label for="lastName">@lang('website.Last Name')</label> -->
-                                    <input type="text" class="form-control field-validate" id="lastname" name="lastname" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->lastname}}@endif" placeholder="@lang('website.Last Name')">
+                                    <input type="text" class="form-control field-validate" id="lastname" name="lastname" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->lastname}}@endif" placeholder="@lang('website.Last Name')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your last name')</span> 
                                   </div>
                                   <div class="form-group col-md-6">
                                     <!-- <label for="firstName">@lang('website.Company')</label> -->
-                                    <input type="text" class="form-control field-validate" id="company" name="company" value="@if(count(session('shipping_address'))>0) {{session('shipping_address')->company}}@endif" placeholder ="@lang('website.Company')">
+                                    <input type="text" class="form-control field-validate" id="company" name="company" value="@if(count((array)session('shipping_address'))>0) {{session('shipping_address')->company}}@endif" placeholder ="@lang('website.Company')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your company name')</span> 
                                   </div>
                                   <div class="form-group col-md-6">
                                     <!-- <label for="firstName">@lang('website.Address')</label> -->
-                                    <input type="text" class="form-control field-validate" id="street" name="street" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->street}}@endif" placeholder ="@lang('website.Address')">
+                                    <input type="text" class="form-control field-validate" id="street" name="street" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->street}}@endif" placeholder ="@lang('website.Address')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your address')</span> 
                                   </div>
                                   <div class="form-group col-md-6" hidden>
                                     <label for="lastName">@lang('website.Country')</label>
                                       <select class="form-control field-validate" id="entry_country_id" onChange="getZones();" name="countries_id">
                                           <option value="" selected>@lang('website.Select Country')</option>
-                                          @if(count($result['countries'])>0)
+                                          @if(count((array)$result['countries'])>0)
                                             @foreach($result['countries'] as $countries)
                                               <?php 
                                               $selected = '';
-                                              if(count(session('shipping_address'))>0) {
+                                              if(count((array)session('shipping_address'))>0) {
                                                 if(session('shipping_address')->countries_id == $countries->countries_id){
                                                   $selected = 'selected';
                                                 }
@@ -123,7 +122,7 @@
                                   </div>
                                   <div class="form-group col-md-6">
                                     <!-- <label for="firstName">Suburb</label> -->
-                                    <input type="text" class="form-control field-validate" id="suburb" name="suburb" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->suburb}}@endif" placeholder="Suburb" />
+                                    <input type="text" class="form-control field-validate" id="suburb" name="suburb" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->suburb}}@endif" placeholder="Suburb" />
                                     <span class="help-block error-content" hidden>@lang('website.Please select your suburb')</span> 
                                   </div>
                                   <div class="form-group col-md-6">
@@ -131,24 +130,24 @@
                                     <select class="form-control field-validate" id="entry_zone_id" name="zone_id">
                        <!-- <option value="190" >Australian</option>  --> 
                                           <option value="Select State">Select State</option>
-                                           @if(count($result['zones'])>0)
+                                           @if(count((array)$result['zones'])>0)
                                             @foreach($result['zones'] as $zones)
-                                                <option value="{{$zones->zone_id}}" @if(count(session('shipping_address'))>0) @if(session('shipping_address')->zone_id == $zones->zone_id) selected @endif @endif >{{$zones->zone_name}}</option>
+                                                <option value="{{$zones->zone_id}}" @if(count((array)session('shipping_address'))>0) @if(session('shipping_address')->zone_id == $zones->zone_id) selected @endif @endif >{{$zones->zone_name}}</option>
                                             @endforeach
                                           @endif
                                           
-                                           <option value="Other" @if(count(session('shipping_address'))>0) @if(session('shipping_address')->zone_id == 'Other') selected @endif @endif>@lang('website.Other')</option>                      
+                                           <option value="Other" @if(count((array)session('shipping_address'))>0) @if(session('shipping_address')->zone_id == 'Other') selected @endif @endif>@lang('website.Other')</option>                      
                                     </select>
                                     <span class="help-block error-content" hidden>@lang('website.Please select your state')</span> 
                                   </div>
                                   {{-- <div class="form-group col-md-6 ">
                                     <label for="lastName">@lang('website.City')</label>
-                                    <input autocomplete="use-new-city" type="text" class="form-control field-validate" id="city" name="city" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->city}}@endif" placeholder ="@lang('website.City')" />
+                                    <input autocomplete="use-new-city" type="text" class="form-control field-validate" id="city" name="city" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->city}}@endif" placeholder ="@lang('website.City')" />
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your city')</span> 
                                   </div> --}}
                                   <div class="form-group col-md-6">
                                     <!-- <label for="lastName">@lang('website.Zip/Postal Code')</label> -->
-                                    <input type="text" class="form-control" id="postcode" name="postcode" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->postcode}}@endif" placeholder="@lang('website.Zip/Postal Code')" />
+                                    <input type="text" class="form-control" id="postcode" name="postcode" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->postcode}}@endif" placeholder="@lang('website.Zip/Postal Code')" />
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your Zip/Postal Code')</span> 
                                   </div>    
                                   <?php 
@@ -156,12 +155,12 @@
                                   ?>
                                   <div class="form-group col-md-6">
                                    <!-- <label for="lastName">@lang('website.Phone Number')</label> -->
-                                    <input type="text" class="form-control" id="delivery_phone" name="delivery_phone" value="@if(count(session('shipping_address'))>0){{session('shipping_address')->phone}}@endif" placeholder="@lang('website.Phone Number')" />
+                                    <input type="text" class="form-control" id="delivery_phone" name="delivery_phone" value="@if(count((array)session('shipping_address'))>0){{session('shipping_address')->phone}}@endif" placeholder="@lang('website.Phone Number')" />
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your valid phone number')</span> 
                                   </div>      
                                   <div class="form-group col-md-6">                                
                                     <!-- <label for="lastName">Delivery Date</label> -->
-                                    <!-- <input type="text" class="form-control field-validate" id="delivery_date" name="delivery_date" readonly value="@if(count(session('shipping_address'))>0){{@session('shipping_address')->delivery_date}}@endif" placeholder ="*Delivery Date" autocomplete="off" required /> -->
+                                    <!-- <input type="text" class="form-control field-validate" id="delivery_date" name="delivery_date" readonly value="@if(count((array)session('shipping_address'))>0){{@session('shipping_address')->delivery_date}}@endif" placeholder ="*Delivery Date" autocomplete="off" required /> -->
                                     <!-- <i>We will try our best to deliver your order on the specified date.</i>-->
                                     <!-- <i style="color: red; display: inline-block;">Note: Delivery is 7 days from the date of order placement.</i> -->
                                     <i class="form-control" style="color: red;display: inline-block;font-weight: 500;font-size: 14px;">Delivery timeframe is minimum 2 days from the order date.</i>
@@ -228,31 +227,31 @@
                                 <div class="form-row">
                                   <div class="form-group col-md-6">
                                     <!-- <label for="firstName">@lang('website.First Name')</label> -->
-                                    <input type="text" class="form-control same_address" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_firstname" name="billing_firstname" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_firstname}}@endif" placeholder="@lang('website.First Name')">
+                                    <input type="text" class="form-control same_address" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_firstname" name="billing_firstname" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_firstname}}@endif" placeholder="@lang('website.First Name')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your first name')</span>  
                                   </div>
                                   <div class="form-group col-md-6">
                                     <!-- <label for="lastName">@lang('website.Last Name')</label> -->
-                                    <input type="text" class="form-control same_address" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_lastname" name="billing_lastname" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_lastname}}@endif" placeholder ="@lang('website.Last Name')">
+                                    <input type="text" class="form-control same_address" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_lastname" name="billing_lastname" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_lastname}}@endif" placeholder ="@lang('website.Last Name')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your last name')</span> 
                                   </div>
                                   <div class="form-group col-md-6">
                                    <!--  <label for="firstName">@lang('website.Company')</label> -->
-                                    <input type="text" class="form-control same_address" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_company" name="billing_company" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_company}}@endif" placeholder="@lang('website.Company')">
+                                    <input type="text" class="form-control same_address" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_company" name="billing_company" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_company}}@endif" placeholder="@lang('website.Company')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your company name')</span> 
                                   </div>
                                   <div class="form-group col-md-6">
                                    <!-- <label for="firstName">@lang('website.Address')</label> -->
-                                    <input type="text" class="form-control same_address" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_street" name="billing_street" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_street}}@endif" placeholder="@lang('website.Address')">
+                                    <input type="text" class="form-control same_address" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_street" name="billing_street" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_street}}@endif" placeholder="@lang('website.Address')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your address')</span>
                                   </div>
                                   <div class="form-group col-md-6 d-none">
                                     <!-- <label for="lastName">@lang('website.Country')</label> -->
-                                      <select class="form-control same_address_select" id="billing_countries_id"  onChange="getBillingZones();" name="billing_countries_id" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) disabled @endif @else disabled @endif  >
+                                      <select class="form-control same_address_select" id="billing_countries_id"  onChange="getBillingZones();" name="billing_countries_id" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) disabled @endif @else disabled @endif  >
                                           <option value=""  >@lang('website.Select Country')</option>
-                                          @if(count($result['countries'])>0)
+                                          @if(count((array)$result['countries'])>0)
                                             @foreach($result['countries'] as $countries)
-                                                <option value="{{$countries->countries_id}}" @if(count(session('billing_address'))>0) @if(session('billing_address')->billing_countries_id == $countries->countries_id) selected @endif @endif >{{$countries->countries_name}}</option>
+                                                <option value="{{$countries->countries_id}}" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->billing_countries_id == $countries->countries_id) selected @endif @endif >{{$countries->countries_name}}</option>
                                             @endforeach
                                           @endif
                                       </select>
@@ -260,36 +259,36 @@
                                   </div>
                                   <div class="form-group col-md-6">
                                    <!-- <label for="firstName">Suburb</label> -->
-                                    <input type="text" class="form-control" id="billing_suburb" name="billing_suburb" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_suburb}}@endif" placeholder="Suburb" />
+                                    <input type="text" class="form-control" id="billing_suburb" name="billing_suburb" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_suburb}}@endif" placeholder="Suburb" />
                                     <span class="help-block error-content" hidden>Please select your suburb</span> 
                                   </div>
                                   <div class="form-group col-md-6">
                                     <!-- <label for="firstName">@lang('website.State')</label> -->
-                                    <select class="form-control same_address_select" id="billing_zone_id" name="billing_zone_id" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) disabled @endif @else disabled @endif  >
+                                    <select class="form-control same_address_select" id="billing_zone_id" name="billing_zone_id" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) disabled @endif @else disabled @endif  >
                                           <option value="" >@lang('website.Select State')</option>
-                                          @if(count($result['zones'])>0)
+                                          @if(count((array)$result['zones'])>0)
                                             @foreach($result['zones'] as $key=>$zones)
-                                                <option value="{{$zones->zone_id}}" @if(count(session('billing_address'))>0) @if(session('billing_address')->billing_zone_id == $zones->zone_id) selected @endif @endif >{{$zones->zone_name}}</option>
+                                                <option value="{{$zones->zone_id}}" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->billing_zone_id == $zones->zone_id) selected @endif @endif >{{$zones->zone_name}}</option>
                                             @endforeach                        
                                           @endif
-                                            <option value="Other" @if(count(session('billing_address'))>0) @if(session('billing_address')->billing_zone_id == 'Other') selected @endif @endif>@lang('website.Other')</option>
+                                            <option value="Other" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->billing_zone_id == 'Other') selected @endif @endif>@lang('website.Other')</option>
                                       </select>
                                       <span class="help-block error-content" hidden>@lang('website.Please select your state')</span> 
                                   </div>
                                   {{-- <div class="form-group col-md-6">
                                    <label for="lastName">@lang('website.City')</label>
-                                    <input type="text" class="form-control same_address" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_city" name="billing_city" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_city}}@endif" placeholder="@lang('website.City')">
+                                    <input type="text" class="form-control same_address" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_city" name="billing_city" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_city}}@endif" placeholder="@lang('website.City')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your city')</span>
                                   </div> --}}
                                   <div class="form-group col-md-6">
                                     <!-- <label for="lastName">@lang('website.Zip/Postal Code')</label> -->
-                                    <input type="text" class="form-control same_address"  @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_zip" name="billing_zip" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_zip}}@endif" placeholder="@lang('website.Zip/Postal Code')">
+                                    <input type="text" class="form-control same_address"  @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_zip" name="billing_zip" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_zip}}@endif" placeholder="@lang('website.Zip/Postal Code')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your Zip/Postal Code')</span> 
                                   </div>  
                                     
                                   <div class="form-group col-md-6">
                                     <!-- <label for="lastName">@lang('website.Phone Number')</label> -->
-                                    <input type="text" class="form-control same_address" @if(count(session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_phone" name="billing_phone" value="@if(count(session('billing_address'))>0){{session('billing_address')->billing_phone}}@endif" placeholder="@lang('website.Phone Number')">
+                                    <input type="text" class="form-control same_address" @if(count((array)session('billing_address'))>0) @if(session('billing_address')->same_billing_address==1) readonly @endif @else readonly @endif  id="billing_phone" name="billing_phone" value="@if(count((array)session('billing_address'))>0){{session('billing_address')->billing_phone}}@endif" placeholder="@lang('website.Phone Number')">
                                     <span class="help-block error-content" hidden>@lang('website.Please enter your valid phone number')</span> 
                                   </div>    
                                 </div>
@@ -304,7 +303,7 @@
                         ?>
 
                         <?php           
-                            if(!empty(session('shipping_detail')) and count(session('shipping_detail'))>0){
+                            if(!empty(session('shipping_detail')) and count((array)session('shipping_detail'))>0){
                                 
                                 if(!empty(session('coupon_shipping_free')) and session('coupon_shipping_free')=='yes'){
                                     $shipping_price = 0;
@@ -497,7 +496,7 @@
                                                     
                                                 </a>
                                                 {{$products->products_name}} {{$products->model}} x {{$products->customers_basket_quantity}}
-                                                @if(count($products->attributes) >0)
+                                                @if(count((array)$products->attributes) >0)
                                                     <ul>
                                                         @foreach($products->attributes as $attributes)
                                                             <li>{{$attributes->attribute_name}}<span>{{$attributes->attribute_value}}</span></li>
@@ -572,7 +571,7 @@
                                             {{-- {{$web_setting[19]->value}}{{$shipping_price}} --}}
                                             <div class="shipping-methods ">
                                                 <form name="shipping_mehtods" method="post" id="shipping_mehtods_form" enctype="multipart/form-data" action="{{ URL::to('/checkout_payment_method')}}">
-                                                @if(count($result['shipping_methods'])>0)
+                                                @if(count((array)$result['shipping_methods'])>0)
                                                     <input type="hidden" name="mehtod_name" id="mehtod_name">
                                                     <input type="hidden" name="shipping_price" id="shipping_price">
                                                     
@@ -595,7 +594,7 @@
                                                                         ?>
                                                                         <div class="col-10" for="{{$method_name}}">{{$services['name']}} {{$web_setting[19]->value}}{{$services['rate']}}</div>
                                                                         <div class="col-2">
-                                                                            <input class="shipping_data" id="{{$method_name}}" type="radio" name="shipping_method" value="{{$services['shipping_method']}}" shipping_price="{{$services['rate']}}"  method_name="{{$method_name}}" @if(!empty(session('shipping_detail')) and count(session('shipping_detail')) > 0) 
+                                                                            <input class="shipping_data" id="{{$method_name}}" type="radio" name="shipping_method" value="{{$services['shipping_method']}}" shipping_price="{{$services['rate']}}"  method_name="{{$method_name}}" @if(!empty(session('shipping_detail')) and count((array)session('shipping_detail')) > 0) 
                                                                         @if(session('shipping_detail')->mehtod_name == $method_name) checked @endif
                                                                         @elseif($shipping_methods['is_default']==1) checked @endif
                                                                         ><span class="checkmark3"></span>
@@ -637,7 +636,7 @@
                     @if(Auth::guard('customer')->check())
                         <div class="coupons">
                         	<!-- applied copuns -->
-                            @if(count(session('coupon')) > 0 and !empty(session('coupon')))
+                            @if(count((array)session('coupon')) > 0 and !empty(session('coupon')))
                             	<div class="form-group"> 
                                     <label>@lang('website.Coupon Applied')</label>         
                                     @foreach(session('coupon') as $coupons_show)  
@@ -768,7 +767,7 @@
             <?php 
             $recentProducts = $result['commonContent']['recentProducts']['product_data'];
             $recentProductsRandom = array_rand($recentProducts, 4);
-            for($i=0; $i < count($recentProductsRandom); $i++){
+            for($i=0; $i < count((array)$recentProductsRandom); $i++){
                 $recentProduct = $recentProducts[ $recentProductsRandom[$i] ];
             ?>
             <div class="col-12  product-rl">
@@ -778,14 +777,14 @@
                         <span class="tag text-center d-md-none">
                             @foreach($recentProduct->categories as $key=>$category)
                                 {{$category->categories_name}}
-                                @if(++$key === count($recentProduct->categories)) @else, @endif
+                                @if(++$key === count((array)$recentProduct->categories)) @else, @endif
                             @endforeach
                         </span>
                     </div>
                     <div class="col-md-2 d-md-mobile-none">
                         @foreach($recentProduct->categories as $key=>$category)
                             {{$category->categories_name}}
-                            @if(++$key === count($recentProduct->categories)) @else, @endif
+                            @if(++$key === count((array)$recentProduct->categories)) @else, @endif
                         @endforeach
                     </div>
                     <div class="col-md-2">
