@@ -1,0 +1,12 @@
+<div style="width: 100%; display:block;">
+<img src="{{ URL::to('').'/resources/assets/images/site_images/1586580478.logo_mobile.png' }}" alt="{{ trans('labels.WelcomeEamailTitle') }}">
+<h2>{{ trans('labels.WelcomeEamailTitle') }}</h2>
+<p>
+	<strong>{{ trans('labels.Hi') }} {{ $userData[0]->customers_firstname }} {{ $userData[0]->customers_lastname }}!</strong><br>
+	{{ trans('labels.accountCreatedText') }}<br>
+	<p>Click on the link below to verify your account.</p><br>
+	<a href="<?php  echo $userData[0]->token;?>">Click Here</a><br><br>
+	<strong>{{ trans('labels.Sincerely') }},</strong><br>
+	{{ trans('labels.regardsForThanks') }}
+</p>
+</div>
