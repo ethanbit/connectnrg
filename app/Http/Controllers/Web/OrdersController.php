@@ -962,7 +962,7 @@ class OrdersController extends DataController
 
 			$index++;
 		}
-		echo "<!-- <pre>".count($orders); print_r($orders); echo "</pre>".__FILE__.": ".__LINE__."-->";
+		// echo "<!-- <pre>".count($orders); print_r($orders); echo "</pre>".__FILE__.": ".__LINE__."-->";
 		return $orders; 
 	}
 	

@@ -27,7 +27,7 @@
 }
 
 .description p {
-	height: 50px;
+	max-height: 50px;
 	overflow: hidden;
 	display: block;
 }

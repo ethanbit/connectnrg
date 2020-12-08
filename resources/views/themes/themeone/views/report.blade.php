@@ -104,16 +104,16 @@
 																<td class='date'>
 																	<?php echo $date_purchased ?>
 																</td>
-																<td class='address'>
+																<td class='address' width="150px">
 																	<?php echo $delivery_street_address ?>
 																</td>
 																<td class='suburb'>
 																	<?php echo $delivery_suburb ?>
 																</td>
-																<td class='state'>
+																<td class='state' width="70px">
 																	<?php echo $delivery_state ?>
 																</td>
-																<td class='model'>
+																<td class='model' width="100px">
 																	<?php echo $product->products_model ?>
 																</td>
 																<td class='description' width="150px" title="<?php echo strip_tags($product->description) ?>">
