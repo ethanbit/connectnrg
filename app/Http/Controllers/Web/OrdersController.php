@@ -1733,4 +1733,41 @@ class OrdersController extends DataController
 			}
 		}
 	}
+
+	public function exportReport(){
+		header( 'Content-Type: text/csv' );
+		header( 'Content-Disposition: attachment;filename=Report_'.date('d-m-Y_H-i-s').'.csv');
+
+		$out = fopen('php://output', 'w');
+		$orders = $this->getOrders();
+		$header = array('Order date', 'Delivery Address', 'Suburb', 'State', 'Product Code','Product description','Category','Certification','Cost','Qty','User email');
+		fputcsv($out, $header);
+		
+		
+		foreach($orders as $data)	{
+			$csvData = [];
+			$orders_id = $data->orders_id;
+			$date_purchased = date('d/m/Y', strtotime($data->date_purchased));
+			$delivery_suburb = $data->delivery_suburb;
+			$delivery_state = $data->delivery_state;
+			$delivery_street_address = $data->delivery_street_address;
+			$email = $data->email;
+			foreach($data->products as $product){				
+				$csvData[] = $date_purchased;
+				$csvData[] = $delivery_street_address;
+				$csvData[] = $delivery_suburb;
+				$csvData[] = $delivery_state;
+				$csvData[] = $product->products_model;
+				$csvData[] = $product->description;
+				$csvData[] = $product->categories_name;
+				$csvData[] = $product->certification;
+				$csvData[] = $product->final_price;
+				$csvData[] = $product->products_quantity;
+				$csvData[] = $email;
+				fputcsv($out, $csvData);
+			}
+		}
+
+		fclose($out);
+	}
 }

@@ -13,7 +13,7 @@
             </div>
         </div>
         
-        <div class="my-order-area">
+        <div class="my-order-area report_data">
         	
         	
         	<div class="row">
@@ -24,7 +24,10 @@
                 	
                 	<div class="col-12">
                         <div class="heading">
-                            <h2>Report</h2>
+														<div>
+															<h2>Report</h2>
+															<a href="exportreport" class="btn btn-secondary export"><i class="fa fa-cloud-download" aria-hidden="true"></i> Export</a>
+														</div>
                             <hr>
                         </div>
                         

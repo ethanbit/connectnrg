@@ -26,6 +26,26 @@
 	outline: none;
 }
 
+.report_data .heading {
+	display: block;
+}
+
+.report_data .heading div {
+	width: 100%;
+}
+
+.report_data h2 {
+	float: left;
+}
+
+.report_data a.export {
+	float: right;
+}
+
+.heading hr {
+	clear: both;
+}
+
 .description p {
 	max-height: 50px;
 	overflow: hidden;

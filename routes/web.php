@@ -595,6 +595,7 @@ Route::group(['namespace' => 'Web'], function () {
 
 		Route::get('/report', 'OrdersController@report');		
 		Route::get('/updateordersku', 'OrdersController@updateOrderProductSku');		
+		Route::get('/exportreport', 'OrdersController@exportReport');		
 		
 		Route::get('/shipping-address', 'ShippingAddressController@shippingAddress');
 		Route::post('/addMyAddress', 'ShippingAddressController@addMyAddress');
