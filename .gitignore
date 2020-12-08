@@ -8,8 +8,13 @@
 /.vagrant
 /test*
 /uploads
-/public/
+/public/css/*
 !/public/css/custom.css
+/public/js/*
+!/public/js/custom.js
+/public/fonts/
+/public/images/
+/public/onesignal/
 /publicuploads/
 /database
 /config
@@ -42,3 +47,6 @@ package.json
 phpunit.xml
 robots.txt
 readme.md
+public/publicuploads
+public/web.config
+public/favicon.ico
