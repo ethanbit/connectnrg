@@ -1757,7 +1757,7 @@ class OrdersController extends DataController
 				$csvData[] = addslashes($delivery_suburb);
 				$csvData[] = addslashes($delivery_state);
 				$csvData[] = addslashes($product->products_model);
-				$csvData[] = addslashes($product->description);
+				$csvData[] = addslashes(strip_tags($product->description));
 				$csvData[] = addslashes($product->categories_name);
 				$csvData[] = addslashes($product->certification);
 				$csvData[] = $product->final_price;
