@@ -147,25 +147,25 @@ class CategoriesController extends Controller {
 		}
 		
 		if(!empty($data['search'])){
-			$categories->select('products.products_id', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name');
+			$categories->select('products.products_id', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name','certification');
 				;
 		}
 
 		//parameter special
 		elseif($type == "special"){
 			$categories->LeftJoin('specials', 'specials.products_id', '=', 'products.products_id')
-				->select('products.products_id', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name', 'specials.specials_new_products_price as discount_price', 'specials.specials_new_products_price as discount_price');
+				->select('products.products_id','certification', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name', 'specials.specials_new_products_price as discount_price', 'specials.specials_new_products_price as discount_price');
 		}
 		elseif($type == "flashsale"){
 			//flash sale				
 			$categories->LeftJoin('flash_sale', 'flash_sale.products_id', '=', 'products.products_id')
-			->select(DB::raw(time().' as server_time'),'products.products_id', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name','flash_sale.flash_start_date', 'flash_sale.flash_expires_date', 'flash_sale.flash_sale_products_price as flash_price');
+			->select(DB::raw(time().' as server_time'),'products.products_id','certification', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name','flash_sale.flash_start_date', 'flash_sale.flash_expires_date', 'flash_sale.flash_sale_products_price as flash_price');
 			
 		}
 		else{
 			$categories->LeftJoin('specials', function ($join) use ($currentDate) {  
 				$join->on('specials.products_id', '=', 'products.products_id')->where('status', '=', '1')->where('expires_date', '>', $currentDate);
-			})->select('products.products_id', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name');
+			})->select('products.products_id','certification', 'products.products_status', 'products.products_model', 'products.products_image', 'products.products_price', 'products.products_slug', 'products_description.products_name');
 		}
 		
 		if($type == "special"){ //deals special products
@@ -247,6 +247,7 @@ class CategoriesController extends Controller {
 			return $result;
 		});
 		//$products = $categories->skip($skip)->take($take)->get();
+		//print_r($products);
 		
 		// $total_record = $categories->get();
 		// $products  = $categories->skip($skip)->take($take)->get();
