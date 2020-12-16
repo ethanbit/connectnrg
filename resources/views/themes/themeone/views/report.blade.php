@@ -93,14 +93,17 @@
 															</tr>
 														</thead>
 														<tbody>
-															<?php 
+															<?php 															
 															foreach($result['data'] as $data)	{
 																$orders_id = $data->orders_id;
 																$date_purchased = date('d/m/Y', strtotime($data->date_purchased));
-																$delivery_suburb = $data->delivery_suburb;
-																$delivery_state = $data->delivery_state;
-																$delivery_street_address = $data->delivery_street_address;
-																$email = $data->email;
+																$delivery_suburb = isset($data->delivery_suburb) ? $data->delivery_suburb : '';
+																$delivery_state = isset($data->delivery_state) ? $data->delivery_state : '';
+																$delivery_street_address = isset($data->delivery_street_address) ? $data->delivery_street_address : '';
+																$email = isset($data->email) ? $data->email : '';
+																if(empty($data->products)){
+																	continue;
+																}
 																foreach($data->products as $product){
 															?>
 															<tr>
