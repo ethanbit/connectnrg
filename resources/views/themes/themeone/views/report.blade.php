@@ -105,6 +105,9 @@
 																	continue;
 																}
 																foreach($data->products as $product){
+																	if(empty($product->products_model) and $product->final_price == 0){
+																		continue;
+																	}
 															?>
 															<tr>
 																<td class='date'>
