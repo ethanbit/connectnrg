@@ -108,19 +108,27 @@ class OrdersController extends DataController
 			$myVar = new ShippingAddressController();
 			$address_id = auth()->guard('customer')->user()->customers_default_address_id;
 			$address = $myVar->getShippingAddress($address_id);
+			
 			if(!empty($address)){
 				$address = $address[0];
 				
 				$address->delivery_phone=auth()->guard('customer')->user()->customers_telephone;
 				//$address->address_id = $address_id;
+				if(empty($address_id)){
+					$address_id = $address->address_id;
+				}
 			}else{
 				$address = '';
+				return redirect('shipping-address')->with('error', "Please add shipping address.");
 			}	
+			
+			if(!isset(session('shipping_address')->address_id)){
+				session(['shipping_address' => array()]);
+			}
 
 			if(empty(session('shipping_address'))){
 				session(['shipping_address' => $address]);
 			}	
-			// echo "<pre>"; print_r(session('shipping_address')); echo "</pre>".__FILE__.": ".__LINE__."";
 						
 			//shipping counties
 			if(!empty(session('shipping_address')->countries_id)){			
@@ -759,7 +767,7 @@ class OrdersController extends DataController
 				
 			 $myVar = new CartController();
 			 $cart = $myVar->myCart(array());
-				 
+					
 			//  echo "<pre>"; print_r($cart); echo "</pre>".__FILE__.": ".__LINE__."";exit;
 			 foreach($cart as $products){
 				//get products info	
@@ -807,9 +815,7 @@ class OrdersController extends DataController
 						]);
 					}
 				}
-							
 			 }
-			
 			$responseData = array('success'=>'1', 'data'=>array(), 'message'=>"Order has been placed successfully.");
 
 			if(session('step')=='4'){
